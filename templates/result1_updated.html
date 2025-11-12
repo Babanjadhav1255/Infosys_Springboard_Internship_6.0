@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fake Job Detection Result</title>
+<style>
+  body { font-family: 'Segoe UI'; background: #f3f5f9; text-align: center; padding: 50px; }
+  .progress-container { width: 50%; margin: 20px auto; background: #eee; border-radius: 8px; overflow: hidden; }
+  .progress-bar { height: 25px; color: white; text-align: center; line-height: 25px; font-weight: bold; border-radius: 8px; }
+  .fake { background-color: red; }
+  .real { background-color: green; }
+  .stats { margin-top: 30px; background: #fff; padding: 15px; border-radius: 10px; width: 50%; margin: auto; }
+</style>
+</head>
+<body>
+
+<h2>Prediction Result</h2>
+<p><b>Job Description:</b> {{ description }}</p>
+<p><b>Prediction:</b> {{ label }}</p>
+
+<!-- ✅ Progress bar for confidence -->
+<div class="progress-container">
+  <div class="progress-bar {% if color == 'fake' %}fake{% else %}real{% endif %}"style="width: {{ confidence }}%;">
+    {{ confidence }}%
+  </div>
+</div>
+
+<div class="stats">
+  <h3>Prediction Summary</h3>
+  <p>🧩 Fake Jobs Detected: <span class="fake">{{ fake }}</span></p>
+  <p>✅ Real Jobs Detected: <span class="real">{{ real }}</span></p>
+</div>
+
+<a href="/">← Back to Home</a>
+</body>
+</html>

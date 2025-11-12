@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fake Job Detection</title>
+<style>
+
+    body { font-family: 'Segoe UI'; background: #f3f5f9; text-align: center; padding: 50px; }
+
+    form { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 50%; margin: auto; }
+
+    textarea { width: 90%; height: 120px; padding: 10px; border: 1px solid #ccc; border-radius: 8px; }
+
+    button { padding: 10px 20px; border: none; border-radius: 8px; background-color: #28a745; color: white; cursor: pointer; }
+
+    button:hover { background-color: #218838; }
+
+    .error { color: red; margin-top: 10px; }
+
+    .stats { margin-top: 30px; background: #fff; padding: 15px; border-radius: 10px; width: 50%; margin: auto; }
+
+    .fake { color: red; font-weight: bold; }
+
+    .real { color: green; font-weight: bold; }
+</style>
+</head>
+<body>
+<h2>Fake Job Detection System</h2>
+<form action="/predict" method="POST">
+<label><b>Enter Job Description:</b></label><br><br>
+<textarea name="job_description" placeholder="Paste job post here..."></textarea><br><br>
+<button type="submit">Check Authenticity</button>
+</form>
+ 
+  {% if error %}
+<p class="error">{{ error }}</p>
+
+  {% endif %}
+ 
+  <div class="stats">
+<h3>Prediction Summary</h3>
+<p>🧩 Fake Jobs Detected: <span class="fake">{{ fake }}</span></p>
+<p>✅ Real Jobs Detected: <span class="real">{{ real }}</span></p>
+</div>
+</body>
+</html>

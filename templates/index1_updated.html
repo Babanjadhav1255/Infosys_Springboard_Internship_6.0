@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fake Job Detection</title>
+<style>
+  body {
+       font-family: 'Segoe UI'; 
+       background: #f3f5f9;
+       text-align: center; 
+       padding: 50px;
+     }
+  form { background: white; 
+         padding: 30px; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 50%; margin: auto; }
+  textarea { width: 90%; height: 120px; padding: 10px; border: 1px solid #ccc; border-radius: 8px; }
+  button { padding: 10px 20px; border: none; border-radius: 8px; background-color: #28a745; color: white; cursor: pointer; }
+  button:hover { background-color: #218838; }
+  .stats { margin-top: 30px; background: #fff; padding: 15px; border-radius: 10px; width: 50%; margin: auto; }
+  .fake { color: red; font-weight: bold; }
+  .real { color: green; font-weight: bold; }
+  .badge { display: inline-block; padding: 5px 10px; border-radius: 6px; color: white; }
+  .fake-badge { background-color: red; }
+  .real-badge { background-color: green; }
+</style>
+
+<script>
+  // ✅ Show alerts for errors
+  window.onload = function() {
+    const errorMsg = "{{ error }}";
+    if (errorMsg) {
+      alert(errorMsg);
+    }
+  }
+</script>
+</head>
+
+<body>
+<h2>Fake Job Detection System</h2>
+
+<form action="/predict" method="POST">
+  <label><b>Enter Job Description:</b></label><br><br>
+  <textarea name="job_description" placeholder="Paste job post here..."></textarea><br><br>
+  <button type="submit">Check Authenticity</button>
+</form>
+
+<!-- ✅ Show last result if available -->
+{% if last_prediction %}
+  <div class="stats" style="margin-top:30px;">
+    <h3>Last Prediction Result</h3>
+    <p>Label: <span class="badge {% if last_prediction.color == 'fake' %}fake-badge{% else %}real-badge{% endif %}">
+        {{ last_prediction.label }}
+      </span>
+    </p>
+    <p>Confidence: <b>{{ last_prediction.confidence }}%</b></p>
+  </div>
+{% endif %}
+
+<!-- ✅ Tips Section -->
+<div class="stats">
+  <h3>🧠 Tips to Identify Fake Jobs</h3>
+  <ul style="text-align:left; display:inline-block;">
+    <li>Be cautious of jobs offering unusually high salaries for simple tasks.</li>
+    <li>Avoid posts asking for personal or banking information.</li>
+    <li>Check for company email addresses (not free domains like Gmail/Yahoo).</li>
+    <li>Look for grammatical errors and vague job descriptions.</li>
+    <li>Research the company on LinkedIn or official websites.</li>
+  </ul>
+</div>
+
+<div class="stats">
+  <h3>Prediction Summary</h3>
+  <p>🧩 Fake Jobs Detected: <span class="fake">{{ fake }}</span></p>
+  <p>✅ Real Jobs Detected: <span class="real">{{ real }}</span></p>
+</div>
+
+</body>
+</html>
